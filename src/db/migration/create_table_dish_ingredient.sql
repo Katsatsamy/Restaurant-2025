@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXIST dish_ingredient(
+CREATE TABLE dish_ingredient(
     id_dish VARCHAR,
     id_ingredient VARCHAR,
     required_quantity int,

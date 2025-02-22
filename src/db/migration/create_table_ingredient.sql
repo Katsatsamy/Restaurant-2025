@@ -9,13 +9,13 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO new_user;
 
 CREATE TYPE unity AS ENUM ('G','L','U');
 
-CREATE TABLE IF NOT EXIST ingredient(
+CREATE TABLE ingredient(
     id VARCHAR primary key,
     name VARCHAR,
     unity unity
 );
 
-CREATE TABLE IF NOT EXIST price(
+CREATE TABLE price(
     id VARCHAR PRIMARY KEY,
     unit_price int,
     date DATE DEFAULT CURRENT_DATE,

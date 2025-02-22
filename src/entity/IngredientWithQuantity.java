@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class IngredientWithQuantity {
     private Ingredient ingredient;
-    private int required_quantity;
+    private double required_quantity;
     private Unity unity;
 
-    public IngredientWithQuantity(Ingredient ingredient, int requiredQuantity, Unity unity) {
+    public IngredientWithQuantity(Ingredient ingredient, double requiredQuantity, Unity unity) {
         this.ingredient = ingredient;
         this.required_quantity = requiredQuantity;
         this.unity = unity;
@@ -17,7 +17,7 @@ public class IngredientWithQuantity {
         return ingredient;
     }
 
-    public int getRequeredquantity() {
+    public double getRequeredquantity() {
         return required_quantity;
     }
 

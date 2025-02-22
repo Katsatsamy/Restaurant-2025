@@ -1,6 +1,7 @@
 package entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Ingredient {
     private String id;
@@ -39,5 +40,28 @@ public class Ingredient {
 
     public int getProductCost(){
         return 1;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", updateDateTime=" + updateDateTime +
+                ", unitPrice=" + unitPrice +
+                ", unity=" + unity +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return unitPrice == that.unitPrice && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(updateDateTime, that.updateDateTime) && unity == that.unity;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, updateDateTime, unitPrice, unity);
     }
 }
