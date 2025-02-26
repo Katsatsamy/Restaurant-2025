@@ -25,6 +25,18 @@ public class IngredientWithQuantity {
         return unity;
     }
 
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    public void setRequiredQuantity(double requiredQuantity) {
+        this.requiredQuantity = requiredQuantity;
+    }
+
+    public void setUnity(Unity unity) {
+        this.unity = unity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

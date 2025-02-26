@@ -20,7 +20,9 @@ public class IngredientCrudOperationTest {
                 HuileIngredient()
         );
 
-        List<Ingredient> actual = subject.getAll(1, 2);
+        List<Ingredient> actual = subject.getAll(2, 2);
+        System.out.println(expected);
+        System.out.println(actual);
 
         assertTrue(actual.containsAll(expected));
     }

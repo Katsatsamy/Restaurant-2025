@@ -32,6 +32,17 @@ public class Dish {
         return ingredients;
     }
 
+
+    public double getIngredientsPriceTotal() {
+        return getIngredients().stream()
+                .mapToDouble(ingredient -> ingredient.getIngredient().getUnitPrice() * ingredient.getRequiredQuantity())
+                .sum();
+    }
+
+    public double getGrossMargin(){
+        return getUnitPrice() - getIngredientsPriceTotal();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

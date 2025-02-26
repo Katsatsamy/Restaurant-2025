@@ -125,7 +125,7 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
     }
 
     public IngredientPrice getIngredientPrice(String ingredient_id){
-        String sql = "SELECT unit_price, date FROM price WHERE id_ingredient = ?";
+        String sql = "SELECT unit_price, date FROM price WHERE id_ingredient = ? ORDER BY date LIMIT 1";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, ingredient_id);
