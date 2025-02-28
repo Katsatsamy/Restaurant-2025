@@ -22,3 +22,6 @@ CREATE TABLE price(
     id_ingredient VARCHAR,
     FOREIGN KEY (id_ingredient) REFERENCES ingredient(id)
 );
+
+CREATE VIEW ingredient_price AS
+SELECT i.id, i.name, i.unity, p.unit_price,p.date FROM ingredient i JOIN price p ON i.id = p.id_ingredient;

@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class IngredientPrice {
-    private int unitPrice;
+    private Double unitPrice;
     private LocalDateTime date;
 
-    public IngredientPrice(int unitPrice, LocalDateTime date) {
+    public IngredientPrice(Double unitPrice, LocalDateTime date) {
         this.unitPrice = unitPrice;
         this.date = date;
     }
 
-    public int getUnit_price() {
+    public Double getUnit_price() {
         return unitPrice;
     }
 

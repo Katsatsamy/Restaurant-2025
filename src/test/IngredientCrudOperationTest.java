@@ -48,8 +48,8 @@ public class IngredientCrudOperationTest {
     @Test
     public void create_or_update_ingredient(){
         List<Ingredient> expected = List.of(
-                createIngredient("1", "Saucisse", LocalDateTime.of(2025,01,01,0,0),20, Unity.G),
-                createIngredient("2","Huile", LocalDateTime.of(2025,01,01,0,0),10000, Unity.L)
+                createIngredient("1", "Saucisse", LocalDateTime.of(2025,01,01,0,0),20.0, Unity.G),
+                createIngredient("2","Huile", LocalDateTime.of(2025,01,01,0,0),10000.0, Unity.L)
         );
 
         List<Ingredient> actual = subject.saveAll(expected);
@@ -80,36 +80,47 @@ public class IngredientCrudOperationTest {
     @Test
     public void find_by_criteria(){
         List<Criteria> criteria = List.of(
-                new Criteria("unity", Operator.EQUAL, "U", Connector.AND),
-                new Criteria("name", Order.ASC),
-                new Criteria("name", Operator.EQUAL, "oeu", Connector.AND)
+                new Criteria("unity", Operator.EQUAL, "G", Connector.AND),
+                new Criteria("date", Order.DESC),
+                new Criteria("unit_price", Operator.INF, 100.0, Connector.AND)
         );
         List<Ingredient> expected = List.of(
-                OeufIngredient()
+                SelIngredient(),
+                RizIngredient(),
+                SaucisseIngredient()
         );
 
         List<Ingredient> actual = subject.findByCriteria(criteria);
 
-        assertTrue(actual.containsAll(expected));
+        assertTrue(actual.equals(expected));
     }
 
     public Ingredient SaucisseIngredient(){
-        return createIngredient("1","Saucisse", LocalDateTime.of(2025,01,01,0,0),20, Unity.G);
+        return createIngredient("1","Saucisse", LocalDateTime.of(2025,01,01,0,0),20.0, Unity.G);
     }
 
     public Ingredient HuileIngredient(){
-        return createIngredient("2","Huile", LocalDateTime.of(2025,01,01,0,0),10000, Unity.L);
+        return createIngredient("2","Huile", LocalDateTime.of(2025,01,01,0,0),10000.0, Unity.L);
     }
 
     public Ingredient OeufIngredient(){
-        return createIngredient("3","Oeuf", LocalDateTime.of(2025,01,01,0,0),1000, Unity.U);
+        return createIngredient("3","Oeuf", LocalDateTime.of(2025,01,01,0,0),1000.0, Unity.U);
     }
 
     public Ingredient PainIngredient(){
-        return createIngredient("4","Pain", LocalDateTime.of(2025,01,01,0,0),1000, Unity.U);
+        return createIngredient("4","Pain", LocalDateTime.of(2025,01,01,0,0),1000.0, Unity.U);
     }
 
-    public Ingredient createIngredient(String id, String name, LocalDateTime updateDatetime, int unitPrice, Unity unity) {
+    public Ingredient SelIngredient(){
+        return createIngredient("5", "sel", LocalDateTime.of(2025,02,28,0,0),2.5, Unity.G);
+    }
+
+    public Ingredient RizIngredient(){
+        return createIngredient("6", "riz", LocalDateTime.of(2025,02,28,0,0),3.5, Unity.G);
+
+    }
+
+    public Ingredient createIngredient(String id, String name, LocalDateTime updateDatetime, Double unitPrice, Unity unity) {
         Ingredient ingredient =  new Ingredient(id,name,updateDatetime,unitPrice,unity);
         return ingredient;
     }

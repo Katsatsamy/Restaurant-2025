@@ -73,19 +73,19 @@ public class DishCrudOperationTest {
 
 
     public Ingredient SaucisseIngredient(){
-        return createIngredient("1","Saucisse", LocalDateTime.of(2025,01,01,0,0),20, Unity.G);
+        return createIngredient("1","Saucisse", LocalDateTime.of(2025,01,01,0,0),20.0, Unity.G);
     }
 
     public Ingredient HuileIngredient(){
-        return createIngredient("2","Huile", LocalDateTime.of(2025,01,01,0,0),10000, Unity.L);
+        return createIngredient("2","Huile", LocalDateTime.of(2025,01,01,0,0),10000.0, Unity.L);
     }
 
     public Ingredient OeufIngredient(){
-        return createIngredient("3","Oeuf", LocalDateTime.of(2025,01,01,0,0),1000, Unity.U);
+        return createIngredient("3","Oeuf", LocalDateTime.of(2025,01,01,0,0),1000.0, Unity.U);
     }
 
     public Ingredient PainIngredient(){
-        return createIngredient("4","Pain", LocalDateTime.of(2025,01,01,0,0),1000, Unity.U);
+        return createIngredient("4","Pain", LocalDateTime.of(2025,01,01,0,0),1000.0, Unity.U);
     }
 
     public IngredientWithQuantity SaucisseIngredientWithQuantity(){
@@ -104,7 +104,7 @@ public class DishCrudOperationTest {
         return createIngredientWithQuantity(PainIngredient(), 1, Unity.U);
     }
 
-    public Ingredient createIngredient(String id, String name, LocalDateTime updateDatetime, int unitPrice, Unity unity) {
+    public Ingredient createIngredient(String id, String name, LocalDateTime updateDatetime, Double unitPrice, Unity unity) {
         Ingredient ingredient =  new Ingredient(id,name,updateDatetime,unitPrice,unity);
         return ingredient;
     }

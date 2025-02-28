@@ -10,10 +10,10 @@ public class Ingredient {
     private String id;
     private String name;
     private LocalDateTime updateDateTime;
-    private int unitPrice;
+    private Double unitPrice;
     private Unity unity;
 
-    public Ingredient(String id, String name, LocalDateTime updateDateTime, int unitPrice, Unity unity) {
+    public Ingredient(String id, String name, LocalDateTime updateDateTime, Double unitPrice, Unity unity) {
         this.id = id;
         this.name = name;
         this.updateDateTime = updateDateTime;
@@ -33,15 +33,15 @@ public class Ingredient {
         return updateDateTime;
     }
 
-    public int getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
 
-    public int getUnitPrice(LocalDateTime date) {
+    public Double getUnitPrice(LocalDateTime date) {
         IngredientCrudOperation ingredientCrudOperation = new IngredientCrudOperation();
         IngredientPrice price =  ingredientCrudOperation.getIngredientPrice(id, date);
         if (price == null) {
-            return 0;
+            return 0.0;
         }
         return price.getUnit_price();
     }
@@ -93,7 +93,7 @@ public class Ingredient {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return unitPrice == that.unitPrice && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(updateDateTime, that.updateDateTime) && unity == that.unity;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(updateDateTime, that.updateDateTime) && Objects.equals(unitPrice, that.unitPrice) && unity == that.unity;
     }
 
     @Override

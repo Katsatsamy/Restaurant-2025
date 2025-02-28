@@ -111,7 +111,7 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
                 ingredientStatement.executeUpdate();
 
                 priceStatement.setString(1, getPriceID(ingredient.getId()));
-                priceStatement.setInt(2, ingredient.getUnitPrice());
+                priceStatement.setDouble(2, ingredient.getUnitPrice());
                 priceStatement.setTimestamp(3, Timestamp.valueOf(ingredient.getUpdateDateTime()));
                 priceStatement.setString(4, ingredient.getId());
                 priceStatement.executeUpdate();
@@ -133,7 +133,7 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
             try(ResultSet resultSet = statement.executeQuery();){
                 if(resultSet.next()){
                     IngredientPrice ingredientPrice = new IngredientPrice(
-                            resultSet.getInt("unit_price"),
+                            resultSet.getDouble("unit_price"),
                             resultSet.getTimestamp("date").toLocalDateTime()
                     );
                     return ingredientPrice;
@@ -155,7 +155,7 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
             try(ResultSet resultSet = statement.executeQuery();){
                 if(resultSet.next()){
                     IngredientPrice ingredientPrice = new IngredientPrice(
-                            resultSet.getInt("unit_price"),
+                            resultSet.getDouble("unit_price"),
                             resultSet.getTimestamp("date").toLocalDateTime()
                     );
                     return ingredientPrice;
@@ -222,7 +222,7 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
     }
 
     public List<Ingredient> findByCriteria(List<Criteria> criteria){
-        String sql = "SELECT id, name, unity FROM ingredient WHERE 1=1";
+        String sql = "SELECT id, name, unity, unit_price, date FROM ingredient_price WHERE 1=1";
         List<Criteria> criteriaFilter = new ArrayList<>();
         List<Criteria> criteriaOrder = new ArrayList<>();
         List<Criteria> criteriaFilterOrder = new ArrayList<>();
@@ -254,13 +254,12 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
         try(Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)){
-            while(resultSet.next()){
-                IngredientPrice ingredientPrice = getIngredientPrice(resultSet.getString("id"));
+            while(resultSet.next()){;
                 Ingredient ingredient = new Ingredient(
                         resultSet.getString("id"),
                         resultSet.getString("name"),
-                        ingredientPrice.getDate(),
-                        ingredientPrice.getUnit_price(),
+                        resultSet.getTimestamp("date").toLocalDateTime(),
+                        resultSet.getDouble("unit_price"),
                         Unity.valueOf(resultSet.getString("unity"))
                 );
                 ingredients.add(ingredient);

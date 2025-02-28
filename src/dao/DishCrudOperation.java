@@ -208,7 +208,7 @@ public class DishCrudOperation implements CrudOperations<Dish> {
             try(ResultSet resultSet = statement.executeQuery();){
                 if(resultSet.next()){
                     IngredientPrice ingredientPrice = new IngredientPrice(
-                            resultSet.getInt("unit_price"),
+                            resultSet.getDouble("unit_price"),
                             resultSet.getTimestamp("date").toLocalDateTime()
                     );
                     return ingredientPrice;
@@ -228,7 +228,7 @@ public class DishCrudOperation implements CrudOperations<Dish> {
             try(ResultSet resultSet = statement.executeQuery();){
                 if(resultSet.next()){
                     IngredientPrice ingredientPrice = new IngredientPrice(
-                            resultSet.getInt("unit_price"),
+                            resultSet.getDouble("unit_price"),
                             resultSet.getTimestamp("date").toLocalDateTime()
                     );
                     return ingredientPrice;
