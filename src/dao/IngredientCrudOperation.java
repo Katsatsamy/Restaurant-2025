@@ -1,9 +1,7 @@
 package dao;
 
 import db.migration.DataSource;
-import entity.Ingredient;
-import entity.IngredientPrice;
-import entity.Unity;
+import entity.*;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -164,6 +162,60 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
                 }
                 return null;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Stock> getAvailableStocks(String ingredient_id){
+        String sql = "SELECT id, movement, quantity, unity, date, id_ingredient FROM stock WHERE id_ingredient = ? AND date <= ?";
+        List<Stock> stocks = new ArrayList<>();
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, ingredient_id);
+            statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            try(ResultSet resultSet = statement.executeQuery();){
+                while(resultSet.next()){
+                    Ingredient ingredient = findById(resultSet.getString("id"));
+                    Stock stock = new Stock(
+                            resultSet.getString("id"),
+                            Movement.valueOf(resultSet.getString("movement")),
+                            resultSet.getDouble("quantity"),
+                            Unity.valueOf(resultSet.getString("unity")),
+                            resultSet.getTimestamp("date").toLocalDateTime(),
+                            ingredient
+                    );
+                    stocks.add(stock);
+                }
+            }
+            return stocks;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Stock> getAvailableStocks(String ingredient_id, LocalDateTime date){
+        String sql = "SELECT id, movement, quantity, unity, date, id_ingredient FROM stock WHERE id_ingredient = ? AND date <= ?";
+        List<Stock> stocks = new ArrayList<>();
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, ingredient_id);
+            statement.setTimestamp(2, Timestamp.valueOf(date));
+            try(ResultSet resultSet = statement.executeQuery();){
+                while(resultSet.next()){
+                    Ingredient ingredient = findById(resultSet.getString("id"));
+                    Stock stock = new Stock(
+                            resultSet.getString("id"),
+                            Movement.valueOf(resultSet.getString("movement")),
+                            resultSet.getDouble("quantity"),
+                            Unity.valueOf(resultSet.getString("unity")),
+                            resultSet.getTimestamp("date").toLocalDateTime(),
+                            ingredient
+                    );
+                    stocks.add(stock);
+                }
+            }
+            return stocks;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -23,3 +23,8 @@ INSERT INTO stock (id, movement, quantity, unity, date, id_ingredient) VALUES
                                                                            ('2', 'ENTER', 50, 'U', '2025-02-01 08:00:00.0', '4'),   -- Pain (50 unités)
                                                                            ('3', 'ENTER', 10000, 'G', '2025-02-01 08:00:00.0', '1'), -- Saucisse (10 kg = 10 000 g)
                                                                            ('4', 'ENTER', 20, 'L', '2025-02-01 08:00:00.0', '2');   -- Huile (20 L)
+
+INSERT INTO stock (id, movement, quantity, unity, date, id_ingredient) VALUES
+                                                                           ('5', 'EXIT', 10, 'U', '2025-02-02 10:00:00.0', '3'),
+                                                                           ('6', 'EXIT', 10, 'U', '2025-02-03 15:00:00.0', '3'),
+                                                                           ('7', 'EXIT', 20, 'U', '2025-02-05 16:00:00.0', '4');

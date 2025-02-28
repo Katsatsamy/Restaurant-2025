@@ -3,6 +3,7 @@ package entity;
 import dao.IngredientCrudOperation;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class Ingredient {
@@ -49,7 +50,33 @@ public class Ingredient {
         return unity;
     }
 
-    public
+    public QuantityStock getAvalaibleQuantity() {
+        IngredientCrudOperation ingredientCrudOperation = new IngredientCrudOperation();
+        List<Stock> stocks = ingredientCrudOperation.getAvailableStocks(id);
+        double quantity = 0;
+        for (Stock stock : stocks) {
+            if(stock.getMovement() == Movement.EXIT){
+                quantity -= stock.getQuantity();
+            }else {
+                quantity += stock.getQuantity();
+            }
+        }
+        return new QuantityStock(quantity, unity);
+    }
+
+    public QuantityStock getAvalaibleQuantity(LocalDateTime date) {
+        IngredientCrudOperation ingredientCrudOperation = new IngredientCrudOperation();
+        List<Stock> stocks = ingredientCrudOperation.getAvailableStocks(id, date);
+        double quantity = 0;
+        for (Stock stock : stocks) {
+            if(stock.getMovement() == Movement.EXIT){
+                quantity -= stock.getQuantity();
+            }else {
+                quantity += stock.getQuantity();
+            }
+        }
+        return new QuantityStock(quantity, unity);
+    }
 
     @Override
     public String toString() {
