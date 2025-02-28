@@ -17,7 +17,7 @@ CREATE TABLE ingredient(
 
 CREATE TABLE price(
     id VARCHAR PRIMARY KEY,
-    unit_price int,
+    unit_price float,
     date DATE DEFAULT CURRENT_DATE,
     id_ingredient VARCHAR,
     FOREIGN KEY (id_ingredient) REFERENCES ingredient(id)

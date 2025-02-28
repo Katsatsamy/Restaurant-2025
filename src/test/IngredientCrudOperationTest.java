@@ -1,9 +1,7 @@
 package test;
 
 import dao.IngredientCrudOperation;
-import entity.Ingredient;
-import entity.QuantityStock;
-import entity.Unity;
+import entity.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -55,8 +53,6 @@ public class IngredientCrudOperationTest {
         );
 
         List<Ingredient> actual = subject.saveAll(expected);
-        System.out.println(expected);
-        System.out.println(actual);
 
         assertTrue(actual.containsAll(expected));
     }
@@ -79,6 +75,22 @@ public class IngredientCrudOperationTest {
         QuantityStock actual = ingredient.getAvalaibleQuantity();
 
         assertTrue(expected.equals(actual));
+    }
+
+    @Test
+    public void find_by_criteria(){
+        List<Criteria> criteria = List.of(
+                new Criteria("unity", Operator.EQUAL, "U", Connector.AND),
+                new Criteria("name", Order.ASC),
+                new Criteria("name", Operator.EQUAL, "oeu", Connector.AND)
+        );
+        List<Ingredient> expected = List.of(
+                OeufIngredient()
+        );
+
+        List<Ingredient> actual = subject.findByCriteria(criteria);
+
+        assertTrue(actual.containsAll(expected));
     }
 
     public Ingredient SaucisseIngredient(){

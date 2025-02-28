@@ -18,7 +18,7 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
             throw new IllegalArgumentException("page must be greater than 0 but is " + page);
         }else{
             List<Ingredient> ingredients = new ArrayList<>();
-            String sql = "SELECT id, name, unity FROM ingredient LIMIT ? OFFSET ?";
+            String sql = "SELECT id, name, unity FROM ingredient ORDER BY id ASC LIMIT ? OFFSET ?";
             try(Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql);){
                 statement.setInt(1, size);
@@ -221,6 +221,56 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
         }
     }
 
+    public List<Ingredient> findByCriteria(List<Criteria> criteria){
+        String sql = "SELECT id, name, unity FROM ingredient WHERE 1=1";
+        List<Criteria> criteriaFilter = new ArrayList<>();
+        List<Criteria> criteriaOrder = new ArrayList<>();
+        List<Criteria> criteriaFilterOrder = new ArrayList<>();
+        List<Ingredient> ingredients = new ArrayList<>();
+        for (Criteria c: criteria){
+            if(c.getOrder() != null){
+                if(c.getValue() == null && c.getConnector() == null){
+                    criteriaOrder.add(c);
+                }else {
+                    criteriaFilterOrder.add(c);
+                }
+            }else {
+                criteriaFilter.add(c);
+            }
+        }
+        for(Criteria c: criteriaFilter){
+            String oper = getOp(c);
+
+            sql += " " + c.getConnector() + " " + c.getFieldName() + " " + oper;
+        }
+        for(Criteria c: criteriaFilterOrder){
+            String oper = getOp(c);
+
+            sql += " " + c.getConnector() + " " + c.getFieldName() + " " + oper + " ORDER BY " + c.getFieldName() + " " + c.getOrder();
+        }
+        for (Criteria c: criteriaOrder){
+            sql += " ORDER BY " + c.getFieldName() + " " + c.getOrder();
+        }
+        try(Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql)){
+            while(resultSet.next()){
+                IngredientPrice ingredientPrice = getIngredientPrice(resultSet.getString("id"));
+                Ingredient ingredient = new Ingredient(
+                        resultSet.getString("id"),
+                        resultSet.getString("name"),
+                        ingredientPrice.getDate(),
+                        ingredientPrice.getUnit_price(),
+                        Unity.valueOf(resultSet.getString("unity"))
+                );
+                ingredients.add(ingredient);
+            }
+            return ingredients;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public String getPriceID(String ingredient_id){
         String sql = "SELECT id FROM price WHERE id_ingredient = ?";
         String id = null;
@@ -236,5 +286,24 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getOp(Criteria c){
+        if(c.getOperator() == Operator.EQUAL){
+            if(c.getFieldName() == "name"){
+                return "ILIKE '%" + c.getValue() + "%'";
+            }else{
+                return "= '" + c.getValue() + "'";
+            }
+        }if(c.getOperator() == Operator.SUP){
+            return "> '" + c.getValue() + "'";
+        }if(c.getOperator() == Operator.INF){
+             return "< '" + c.getValue() + "'";
+        }if(c.getOperator() == Operator.SUP_AND_EQUAL){
+            return ">= '" + c.getValue() + "'";
+        }if(c.getOperator() == Operator.INF_AND_EQUAL){
+            return "<= '" + c.getValue() + "'";
+        }
+        return "";
     }
 }
