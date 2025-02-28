@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,8 +40,18 @@ public class Dish {
                 .sum();
     }
 
+    public double getIngredientsPriceTotal(LocalDateTime date) {
+        return getIngredients().stream()
+                .mapToDouble(ingredient -> ingredient.getIngredient().getUnitPrice(date) * ingredient.getRequiredQuantity())
+                .sum();
+    }
+
     public double getGrossMargin(){
-        return getUnitPrice() - getIngredientsPriceTotal();
+        return getUnitPrice() - getIngredientsPriceTotal(LocalDateTime.now());
+    }
+
+    public double getGrossMargin(LocalDateTime date){
+        return getUnitPrice() - getIngredientsPriceTotal(date);
     }
 
     @Override

@@ -17,24 +17,22 @@ public class IngredientCrudOperationTest {
     public void read_all_ingredients(){
         List<Ingredient> expected = List.of(
                 SaucisseIngredient(),
-                HuileIngredient()
+                HuileIngredient(),
+                OeufIngredient(),
+                PainIngredient()
         );
 
-        List<Ingredient> actual = subject.getAll(2, 2);
-        System.out.println(expected);
-        System.out.println(actual);
+        List<Ingredient> actual = subject.getAll(1, 4);
 
         assertTrue(actual.containsAll(expected));
     }
 
     @Test
+
     public void read_one_ingredient_by_id(){
         Ingredient expected = SaucisseIngredient();
 
         Ingredient actual = subject.findById("1");
-
-        System.out.println(expected);
-        System.out.println(actual);
 
         assertTrue(expected.equals(actual));
     }
@@ -56,6 +54,8 @@ public class IngredientCrudOperationTest {
         );
 
         List<Ingredient> actual = subject.saveAll(expected);
+        System.out.println(expected);
+        System.out.println(actual);
 
         assertTrue(actual.containsAll(expected));
     }
@@ -66,6 +66,14 @@ public class IngredientCrudOperationTest {
 
     public Ingredient HuileIngredient(){
         return createIngredient("2","Huile", LocalDateTime.of(2025,01,01,0,0),10000, Unity.L);
+    }
+
+    public Ingredient OeufIngredient(){
+        return createIngredient("3","Oeuf", LocalDateTime.of(2025,01,01,0,0),1000, Unity.U);
+    }
+
+    public Ingredient PainIngredient(){
+        return createIngredient("4","Pain", LocalDateTime.of(2025,01,01,0,0),1000, Unity.U);
     }
 
     public Ingredient createIngredient(String id, String name, LocalDateTime updateDatetime, int unitPrice, Unity unity) {

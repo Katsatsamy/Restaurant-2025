@@ -1,5 +1,7 @@
 package entity;
 
+import dao.IngredientCrudOperation;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -7,7 +9,7 @@ public class Ingredient {
     private String id;
     private String name;
     private LocalDateTime updateDateTime;
-    private final int unitPrice;
+    private int unitPrice;
     private Unity unity;
 
     public Ingredient(String id, String name, LocalDateTime updateDateTime, int unitPrice, Unity unity) {
@@ -34,13 +36,20 @@ public class Ingredient {
         return unitPrice;
     }
 
+    public int getUnitPrice(LocalDateTime date) {
+        IngredientCrudOperation ingredientCrudOperation = new IngredientCrudOperation();
+        IngredientPrice price =  ingredientCrudOperation.getIngredientPrice(id, date);
+        if (price == null) {
+            return 0;
+        }
+        return price.getUnit_price();
+    }
+
     public Unity getUnity() {
         return unity;
     }
 
-    public int getProductCost(){
-        return 1;
-    }
+    public
 
     @Override
     public String toString() {

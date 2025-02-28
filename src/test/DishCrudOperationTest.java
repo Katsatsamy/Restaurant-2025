@@ -7,6 +7,7 @@ import entity.IngredientWithQuantity;
 import entity.Unity;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,21 +32,41 @@ public class DishCrudOperationTest {
     }
 
     @Test
-    public void get_price_total_ingredients_in_dish() {
+    public void get_price_total_ingredients_in_dish_without_date() {
         double expected = 5500;
-        Dish dish = subject.findById("1", LocalDateTime.now());
+        Dish dish = subject.findById("1");
 
         double actual = dish.getIngredientsPriceTotal();
 
         assertEquals(expected, actual);
     }
 
+    @Test void get_price_total_ingredient_in_dish_with_date(){
+        double expected = 0;
+        Dish dish = subject.findById("1");
+
+        double actual = dish.getIngredientsPriceTotal(LocalDateTime.of(1999,01,01,0,0,0));
+
+        assertEquals(expected, actual);
+
+    }
+
     @Test
-    public void get_gross_margin_test(){
+    public void get_gross_margin_test_without_date(){
         double expected = 9500;
         Dish dish = subject.findById("1");
 
         double actual = dish.getGrossMargin();
+
+        assertEquals(expected, actual);;
+    }
+
+    @Test
+    public void get_gross_margin_test_with_date(){
+        double expected = 9500;
+        Dish dish = subject.findById("1");
+
+        double actual = dish.getGrossMargin(LocalDateTime.of(2026,01,01,0,0,0));
 
         assertEquals(expected, actual);;
     }

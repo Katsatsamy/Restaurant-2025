@@ -6,6 +6,8 @@ import entity.IngredientPrice;
 import entity.Unity;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,10 +127,33 @@ public class IngredientCrudOperation implements CrudOperations<Ingredient> {
     }
 
     public IngredientPrice getIngredientPrice(String ingredient_id){
-        String sql = "SELECT unit_price, date FROM price WHERE id_ingredient = ? ORDER BY date LIMIT 1";
+        String sql = "SELECT unit_price, date FROM price WHERE id_ingredient = ? ORDER BY ABS(EXTRACT(EPOCH FROM date) - EXTRACT(EPOCH FROM ?::timestamp)) LIMIT 1;";
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, ingredient_id);
+            statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            try(ResultSet resultSet = statement.executeQuery();){
+                if(resultSet.next()){
+                    IngredientPrice ingredientPrice = new IngredientPrice(
+                            resultSet.getInt("unit_price"),
+                            resultSet.getTimestamp("date").toLocalDateTime()
+                    );
+                    return ingredientPrice;
+                }
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public IngredientPrice getIngredientPrice(String ingredient_id, LocalDateTime date){
+        String sql = "SELECT unit_price, date FROM price WHERE id_ingredient = ? AND date <= ? ORDER BY ABS(EXTRACT(EPOCH FROM date) - EXTRACT(EPOCH FROM ?::timestamp)) LIMIT 1;";
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, ingredient_id);
+            statement.setTimestamp(2, Timestamp.valueOf(date));
+            statement.setTimestamp(3, Timestamp.valueOf(date));
             try(ResultSet resultSet = statement.executeQuery();){
                 if(resultSet.next()){
                     IngredientPrice ingredientPrice = new IngredientPrice(

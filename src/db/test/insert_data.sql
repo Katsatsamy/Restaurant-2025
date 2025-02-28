@@ -18,3 +18,8 @@ INSERT INTO dish_ingredient (id_dish, id_ingredient, required_quantity, unity) V
                                                                                    ('1', '2', 0.15, 'L'),
                                                                                    ('1', '3', 1, 'U'),
                                                                                    ('1', '4', 1, 'U');
+INSERT INTO stock (id, movement, quantity, unity, date, id_ingredient) VALUES
+                                                                           ('1', 'ENTER', 100, 'U', '2025-02-01 08:00:00.0', '3'),  -- Oeuf (100 unités)
+                                                                           ('2', 'ENTER', 50, 'U', '2025-02-01 08:00:00.0', '4'),   -- Pain (50 unités)
+                                                                           ('3', 'ENTER', 10000, 'G', '2025-02-01 08:00:00.0', '1'), -- Saucisse (10 kg = 10 000 g)
+                                                                           ('4', 'ENTER', 20, 'L', '2025-02-01 08:00:00.0', '2');   -- Huile (20 L)
