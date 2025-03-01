@@ -25,7 +25,6 @@ public class StockCrudOperationTest {
         );
         List<Stock> actual = subject.saveAll(stocks);
 
-        assertNotNull(actual);
         assertEquals(3, actual.size());
 
 
@@ -36,7 +35,6 @@ public class StockCrudOperationTest {
 
         List<Stock> savedConflictingStocks = subject.saveAll(conflictingStocks);
 
-        assertNotNull(savedConflictingStocks);
         assertEquals(1, savedConflictingStocks.size());
     }
 
