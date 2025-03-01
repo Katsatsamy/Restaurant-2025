@@ -1,8 +1,7 @@
 package entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Dish {
     private String id;
@@ -53,6 +52,34 @@ public class Dish {
     public double getGrossMargin(LocalDateTime date){
         return getUnitPrice() - getIngredientsPriceTotal(date);
     }
+
+    public double getAvailableQuantity() {
+        List<Double> resultList = new ArrayList<>();
+
+        for (IngredientWithQuantity ingredient : getIngredients()) {
+            resultList.add(
+                    ingredient.getIngredient().getAvalaibleQuantity().getQuantity() / ingredient.getRequiredQuantity()
+            );
+        }
+        Collections.sort(resultList);
+        if(resultList.isEmpty()) return 0.0;
+        return resultList.get(0);
+    }
+
+    public double getAvailableQuantity(LocalDateTime date) {
+        List<Double> resultList = new ArrayList<>();
+
+        for (IngredientWithQuantity ingredient : getIngredients()) {
+            resultList.add(
+                    ingredient.getIngredient().getAvalaibleQuantity(date).getQuantity() / ingredient.getRequiredQuantity()
+            );
+        }
+        Collections.sort(resultList);
+        if(resultList.isEmpty()) return 0.0;
+        return resultList.get(0);
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

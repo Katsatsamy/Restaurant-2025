@@ -59,7 +59,7 @@ public class IngredientCrudOperationTest {
 
     @Test
     public  void get_available_quantity_with_date(){
-        Ingredient ingredient = PainIngredient();
+        Ingredient ingredient = subject.findById("4");
         QuantityStock expected = PainStock();
 
         QuantityStock actual = ingredient.getAvalaibleQuantity(LocalDateTime.of(2025,02,24,8,0,0));
@@ -69,7 +69,7 @@ public class IngredientCrudOperationTest {
 
     @Test
     public  void get_available_quantity_without_date(){
-        Ingredient ingredient = OeufIngredient();
+        Ingredient ingredient = subject.findById("3");
         QuantityStock expected = OeufStock();
 
         QuantityStock actual = ingredient.getAvalaibleQuantity();

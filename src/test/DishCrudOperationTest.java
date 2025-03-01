@@ -1,10 +1,7 @@
 package test;
 
 import dao.DishCrudOperation;
-import entity.Dish;
-import entity.Ingredient;
-import entity.IngredientWithQuantity;
-import entity.Unity;
+import entity.*;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
@@ -71,6 +68,16 @@ public class DishCrudOperationTest {
         assertEquals(expected, actual);;
     }
 
+    @Test
+    public void get_available_quantity_test(){
+        double expected =  30.0;
+
+        Dish dish = subject.findById("1");
+        double actual = dish.getAvailableQuantity();
+
+        assertEquals(expected, actual);
+    }
+
 
     public Ingredient SaucisseIngredient(){
         return createIngredient("1","Saucisse", LocalDateTime.of(2025,01,01,0,0),20.0, Unity.G);
@@ -112,5 +119,25 @@ public class DishCrudOperationTest {
     public IngredientWithQuantity createIngredientWithQuantity(Ingredient ingredient, double requiredQuantity, Unity unity) {
         IngredientWithQuantity ingredientWithQuantity = new IngredientWithQuantity(ingredient,requiredQuantity,unity);
         return ingredientWithQuantity;
+    }
+
+    public QuantityStock SaucisseStock(){
+        return createQuantityStock(10000.0, Unity.G);
+    }
+
+    public QuantityStock HuileStock(){
+        return createQuantityStock(20.0, Unity.L);
+    }
+
+    public QuantityStock OeufStock(){
+        return createQuantityStock(80.0, Unity.U);
+    }
+
+    public QuantityStock PainStock(){
+        return createQuantityStock(30.0, Unity.U);
+    }
+
+    public QuantityStock createQuantityStock(Double quantity, Unity unity) {
+        return new QuantityStock(quantity,unity);
     }
 }
