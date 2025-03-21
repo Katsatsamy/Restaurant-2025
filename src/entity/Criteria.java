@@ -5,14 +5,14 @@ public class Criteria {
     private Operator operator;
     private Object value;
     private Connector connector;
-    private Order order;
+    private OrderType orderType;
 
-    public Criteria(String fieldName, Operator operator, Object value, Connector connector, Order order) {
+    public Criteria(String fieldName, Operator operator, Object value, Connector connector, OrderType orderType) {
         this.fieldName = fieldName;
         this.operator = operator;
         this.value = value;
         this.connector = connector;
-        this.order = order;
+        this.orderType = orderType;
     }
 
     public Criteria(String fieldName, Operator operator, Object value, Connector connector) {
@@ -22,9 +22,9 @@ public class Criteria {
         this.connector = connector;
     }
 
-    public Criteria(String fieldName, Order order) {
+    public Criteria(String fieldName, OrderType orderType) {
         this.fieldName = fieldName;
-        this.order = order;
+        this.orderType = orderType;
     }
 
     public String getFieldName() {
@@ -43,7 +43,7 @@ public class Criteria {
         return connector;
     }
 
-    public Order getOrder() {
-        return order;
+    public OrderType getOrder() {
+        return orderType;
     }
 }

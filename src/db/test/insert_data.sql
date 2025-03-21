@@ -6,7 +6,7 @@ INSERT INTO ingredient (id, name, unity) VALUES
 
 INSERT INTO ingredient(id,name,unity) VALUES
     ('5','sel', 'G'),
-    ('6', 'riz', 'G')
+    ('6', 'riz', 'G');
 
 INSERT INTO price (id, unit_price, date, id_ingredient) VALUES
     ('1', 20, '2025-01-01', '1'),

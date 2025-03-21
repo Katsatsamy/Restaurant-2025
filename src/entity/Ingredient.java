@@ -41,7 +41,7 @@ public class Ingredient {
         IngredientCrudOperation ingredientCrudOperation = new IngredientCrudOperation();
         IngredientPrice price =  ingredientCrudOperation.getIngredientPrice(id, date);
         if (price == null) {
-            return 0.0;
+            return (Double) 0.0;
         }
         return price.getUnit_price();
     }

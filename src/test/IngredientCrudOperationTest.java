@@ -81,7 +81,7 @@ public class IngredientCrudOperationTest {
     public void find_by_criteria(){
         List<Criteria> criteria = List.of(
                 new Criteria("unity", Operator.EQUAL, "G", Connector.AND),
-                new Criteria("date", Order.DESC),
+                new Criteria("date", OrderType.DESC),
                 new Criteria("unit_price", Operator.INF, 100.0, Connector.AND)
         );
         List<Ingredient> expected = List.of(
