@@ -1,9 +1,9 @@
-CREATE TYPE order_status AS ENUM ('CRÉÉ', 'CONFIRMÉ', 'EN_PRÉPARATION', 'TERMINÉ', 'SERVI');
+CREATE TYPE order_status AS ENUM ('CREE', 'CONFIRME', 'EN_PREPARATION', 'TERMINE', 'SERVI');
 
 
 CREATE TABLE orders (
     id VARCHAR PRIMARY KEY,
-    status order_status DEFAULT 'CRÉÉ',
+    status order_status DEFAULT 'CREE',
     date TIMESTAMP DEFAULT NOW()
 );
 
@@ -12,8 +12,6 @@ CREATE TABLE dish_order (
     id_order VARCHAR,
     id_dish VARCHAR,
     quantity FLOAT CHECK (quantity > 0),
-    status order_status DEFAULT 'CRÉÉ',
-    date TIMESTAMP DEFAULT NOW(),
     FOREIGN KEY (id_order) REFERENCES orders(id),
     FOREIGN KEY (id_dish) REFERENCES dish(id)
 );

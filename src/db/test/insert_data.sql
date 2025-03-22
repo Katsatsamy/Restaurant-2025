@@ -37,3 +37,22 @@ INSERT INTO stock (id, movement, quantity, unity, date, id_ingredient) VALUES
     ('5', 'EXIT', 10, 'U', '2025-02-02 10:00:00.0', '3'),
     ('6', 'EXIT', 10, 'U', '2025-02-03 15:00:00.0', '3'),
     ('7', 'EXIT', 20, 'U', '2025-02-05 16:00:00.0', '4');
+
+INSERT INTO orders (id, status, date) VALUES
+    ('1', 'CREE', '2025-02-07 10:00:00'),
+    ('2', 'CONFIRME', '2025-02-07 10:15:00'),
+    ('3', 'EN_PREPARATION', '2025-02-07 10:30:00');
+
+INSERT INTO dish_order (id, id_order, id_dish, quantity) VALUES
+    ('1', '1', '1', 2),  -- 2 Hot Dogs dans la commande O1
+    ('2', '2', '1', 1),  -- 1 Hot Dog dans la commande O2
+    ('3', '3', '1', 3);  -- 3 Hot Dogs dans la commande O3
+
+INSERT INTO dish_order_status_history (id_dish_order, status, date) VALUES
+    ('1', 'CREE', '2025-02-07 10:00:00'),
+    ('2', 'CREE', '2025-02-07 10:15:00'),
+    ('2', 'CONFIRME', '2025-02-07 10:16:00'),
+    ('3', 'CREE', '2025-02-07 10:30:00'),
+    ('3', 'EN_PREPARATION', '2025-02-07 10:35:00');
+
+

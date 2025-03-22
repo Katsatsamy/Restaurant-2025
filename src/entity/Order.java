@@ -1,5 +1,8 @@
 package entity;
 
+import dao.DishOrderCudOperation;
+import dao.OrderCrudOperation;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -67,12 +70,23 @@ public class Order {
                 .orElse(this.status);
     }
 
-    private Double getTotalAmount(){
+    public Double getTotalAmount(){
         double totalAmount = 0;
         for(DishOrder dishOrder : dishOrders){
             totalAmount += dishOrder.getQuantity() * dishOrder.getDish().getUnitPrice();
         }
         return totalAmount;
+    }
+
+    public Order addOrderDish(List<DishOrder> dishOrders) {
+        OrderCrudOperation orderDAO = new OrderCrudOperation();
+        DishOrderCudOperation dishOrderDAO = new DishOrderCudOperation();
+
+        orderDAO.addOrder(this);
+        dishOrders.forEach(d -> d.setOrder(this));
+        dishOrderDAO.saveAll(dishOrders);
+
+        return orderDAO.findById(this.id);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -8,11 +9,23 @@ public class DishOrder {
     private String id;
     private Dish dish;
     private double quantity;
+    private Order order;
     private List<DishOrderStatusHistory> statusHistory;
 
+    public DishOrder(String id, Dish dish, double quantity, List<DishOrderStatusHistory> statusHistory) {
+        this.id = id;
+        this.dish = dish;
+        this.quantity = quantity;
+        this.statusHistory = statusHistory;
+    }
+    public DishOrder(String id, Dish dish, double quantity) {
+        this.id = id;
+        this.dish = dish;
+        this.quantity = quantity;
+        this.statusHistory = new ArrayList<>();
+    }
 
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -42,6 +55,14 @@ public class DishOrder {
 
     public void setStatusHistory(List<DishOrderStatusHistory> statusHistory) {
         this.statusHistory = statusHistory;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public DishOrderStatusHistory getActualStatus() {

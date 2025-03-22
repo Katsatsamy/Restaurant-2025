@@ -4,21 +4,27 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class DishOrderStatusHistory {
-    private String id;
+    private Long id;
     private OrderStatus status;
     private LocalDateTime date;
 
-    public DishOrderStatusHistory(String id, OrderStatus status, LocalDateTime date) {
+    public DishOrderStatusHistory(Long id, OrderStatus status, LocalDateTime date) {
         this.id = id;
         this.status = status;
         this.date = date;
     }
 
-    public String getId() {
+    public DishOrderStatusHistory() {
+        this.id = null;
+        this.status = null;
+        this.date = null;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
